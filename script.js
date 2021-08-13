@@ -11,7 +11,7 @@ buttonAdd.textContent = 'Добавить';
 const mainElemets = document.querySelector('.main-elements');
 mainElemets.appendChild(buttonAdd);
 
-window.onload =  init = () =>  {
+window.onload = init = () =>  {
   nameShop = document.querySelector('.shop');
   nameShop.addEventListener('change', updateNameShop);
   cost = document.querySelector('.cost');
@@ -43,7 +43,7 @@ buttonAdd.onclick = () => {
 
 }
 
-const updateNameShop = (event) => { valueNameShop = event.target.value; }
+const updateNameShop = (event) => valueNameShop = event.target.value;
 
 const updateCost = (event) => { valueCost = event.target.value; }
 
@@ -83,5 +83,4 @@ const render = () => {
     container.appendChild(containBut);
     content.appendChild(container);
   });
-
 }

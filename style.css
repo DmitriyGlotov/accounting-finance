@@ -1,0 +1,18 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-elements {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 40%;
+}
+
+.button-add {
+  width: 20%;
+  height: 30px;
+  margin-top: 8%;
+}

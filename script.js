@@ -60,27 +60,47 @@ const render = () => {
     container.className = 'task';
 
     const containBut = document.createElement('div');
-    containBut.className = '.container-button';
+    containBut.className = 'container-button';
 
     const textNameShop = document.createElement('p');
-    textNameShop.innerText = item.textNameShop;
+    textNameShop.className = 'text-name-shop'
+    textNameShop.innerText = `${index + 1}) ${item.textNameShop} ${data()}`;
     container.appendChild(textNameShop);
 
     const numberCost = document.createElement('p');
-    numberCost.innerText = item.textCost;
+    numberCost.className = 'text-cost';
+    numberCost.innerText = `${item.textCost} р.`;
     container.appendChild(numberCost);
 
-    const buttonEdit = document.createElement('button');
-    buttonEdit.className = 'button-edit';
-    buttonEdit.textContent = 'Изменить';
+    const buttonEdit = document.createElement('input');
+    buttonEdit.type = 'image';
+    buttonEdit.src = 'images/edit.png'
+    buttonEdit.className = 'button';
     containBut.appendChild(buttonEdit);
 
-    const buttonDelete = document.createElement('button');
-    buttonDelete.className = 'button-delete';
-    buttonDelete.textContent = 'Удалить';
+    const buttonDelete = document.createElement('input');
+    buttonDelete.type = 'image';
+    buttonDelete.src = 'images/delete.png'
+    buttonDelete.className = 'button';
     containBut.appendChild(buttonDelete);
 
     container.appendChild(containBut);
     content.appendChild(container);
   });
+}
+
+const data = () => {
+  let day = new Date().getDate();
+  let month = new Date().getMonth() + 1;
+  const year = new Date().getFullYear();
+
+  if (day < 10) {
+    day = `0${day}`;
+  }
+
+  if (month < 10) {
+    month = `0${month}`;
+  }
+
+  return `${day}-${month}-${year}`;
 }

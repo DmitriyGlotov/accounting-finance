@@ -1,3 +1,7 @@
+body {
+  background-color: bisque;
+}
+
 .main {
   display: flex;
   flex-direction: column;
@@ -7,12 +11,86 @@
 .main-elements {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 40%;
+  justify-content: space-around;
+  width: 60%;
+}
+
+.name-shop {
+  width: 35%;
+}
+
+.shop {
+  width: 96%;
+  height: 25px;
+  border-radius: 10px;
+  border-color: black;
+  font-size: 18px;
+}
+
+.expenses {
+  width: 24%;
+}
+
+.cost {
+  width: 96%;
+  height: 25px;
+  border-radius: 10px;
+  border-color: black;
+  font-size: 18px;
 }
 
 .button-add {
-  width: 20%;
+  width: 15%;
   height: 30px;
-  margin-top: 8%;
+  margin-top: 50px;
+  border-radius: 6px;
+  border-color: burlywood;
+  background-color: burlywood;
+}
+
+.button-add:hover {
+  cursor: pointer;
+}
+
+.content-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 55%;
+  padding: 2%;
+}
+
+
+
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.text-name-shop {
+  width: 50%;
+  font-size: 19px;
+}
+
+.text-cost {
+  text-align: end;
+  width: 10%;
+  font-size: 17px;
+}
+
+.container-button {
+  display: flex;
+  justify-content: space-between;
+  width: 15%;
+}
+
+.button {
+  width: 35px;
+  height: 30px;
+}
+
+input {
+  outline: none;
 }

@@ -57,10 +57,20 @@ body {
   flex-direction: column;
   align-items: center;
   width: 55%;
-  padding: 2%;
 }
 
+.total-cost {
+  display: flex;
+  justify-content: flex-end;
+  width: 55%;
+  padding: 20px;
+  font-size: 19px;
+}
 
+.total-cost p {
+  margin: 0px;
+  margin-right: 5px;
+}
 
 .task {
   display: flex;

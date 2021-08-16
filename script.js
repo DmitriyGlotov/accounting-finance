@@ -48,10 +48,18 @@ const updateNameShop = (event) => valueNameShop = event.target.value;
 const updateCost = (event) => { valueCost = event.target.value; }
 
 const render = () => {
+  let countCost = 0;
   const content = document.querySelector('.content-page');
+  const totalCost = document.querySelector('.total-cost');
+  const expenses = document.createElement('p');
+  const textCount = document.createElement('p');
 
   while (content.firstChild) {
     content.removeChild(content.firstChild);
+  }
+
+  while (totalCost.firstChild) {
+    totalCost.removeChild(totalCost.firstChild);
   }
 
   allTask.forEach((item, index) => {
@@ -80,13 +88,22 @@ const render = () => {
 
     const buttonDelete = document.createElement('input');
     buttonDelete.type = 'image';
-    buttonDelete.src = 'images/delete.png'
+    buttonDelete.src = 'images/delete.png';
     buttonDelete.className = 'button';
     containBut.appendChild(buttonDelete);
+
+    textCount.innerText = 'Итого: ';
+
+    countCost += Number(item.textCost);
+    console.log(Number(item.textCost))
+    expenses.innerText = `${countCost} р.`;
 
     container.appendChild(containBut);
     content.appendChild(container);
   });
+
+  totalCost.appendChild(textCount);
+  totalCost.appendChild(expenses);
 }
 
 const data = () => {

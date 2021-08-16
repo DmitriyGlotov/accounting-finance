@@ -49,7 +49,6 @@ const updateCost = (event) => { valueCost = event.target.value; }
 
 const render = () => {
   const content = document.querySelector('.content-page');
-  let count = 1;
 
   while (content.firstChild) {
     content.removeChild(content.firstChild);
@@ -65,10 +64,8 @@ const render = () => {
 
     const textNameShop = document.createElement('p');
     textNameShop.className = 'text-name-shop'
-    textNameShop.innerText = `${count}) ${item.textNameShop} ${data()}`;
+    textNameShop.innerText = `${++index}) ${item.textNameShop} ${data()}`;
     container.appendChild(textNameShop);
-
-    ++count;
 
     const numberCost = document.createElement('p');
     numberCost.className = 'text-cost';
@@ -95,15 +92,15 @@ const render = () => {
 const data = () => {
   let day = new Date().getDate();
   let month = new Date().getMonth() + 1;
-  let year = new Date().getFullYear();
+  const year = new Date().getFullYear();
 
   if (day < 10) {
     day = `0${day}`;
-  };
+  }
 
   if (month < 10) {
     month = `0${month}`;
-  };
+  }
 
   return `${day}-${month}-${year}`;
 }

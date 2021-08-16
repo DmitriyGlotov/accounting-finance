@@ -64,7 +64,7 @@ const render = () => {
 
     const textNameShop = document.createElement('p');
     textNameShop.className = 'text-name-shop'
-    textNameShop.innerText = `${++index}) ${item.textNameShop} ${data()}`;
+    textNameShop.innerText = `${index + 1}) ${item.textNameShop} ${data()}`;
     container.appendChild(textNameShop);
 
     const numberCost = document.createElement('p');

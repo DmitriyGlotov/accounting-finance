@@ -50,7 +50,7 @@ const updateCost = (event) => { valueCost = event.target.value; }
 const render = () => {
   let countCost = 0;
   const content = document.querySelector('.content-page');
-  let expenses = document.querySelector('.total');
+  const expenses = document.querySelector('.total');
 
   while (content.firstChild) {
     content.removeChild(content.firstChild);

@@ -86,6 +86,12 @@ const render = () => {
     buttonDelete.className = 'button';
     containBut.appendChild(buttonDelete);
 
+    buttonDelete.onclick = () => {
+      allTask.splice(index, 1);
+
+      render();
+    }
+
     countCost += Number(item.textCost);
 
     container.appendChild(containBut);

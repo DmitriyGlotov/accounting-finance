@@ -48,7 +48,9 @@ const updateNameShop = (event) => valueNameShop = event.target.value;
 const updateCost = (event) => { valueCost = event.target.value; }
 
 const render = () => {
+  let countCost = 0;
   const content = document.querySelector('.content-page');
+  const expenses = document.querySelector('.total');
 
   while (content.firstChild) {
     content.removeChild(content.firstChild);
@@ -80,13 +82,17 @@ const render = () => {
 
     const buttonDelete = document.createElement('input');
     buttonDelete.type = 'image';
-    buttonDelete.src = 'images/delete.png'
+    buttonDelete.src = 'images/delete.png';
     buttonDelete.className = 'button';
     containBut.appendChild(buttonDelete);
+
+    countCost += Number(item.textCost);
 
     container.appendChild(containBut);
     content.appendChild(container);
   });
+
+  expenses.innerText = `${countCost} р.`;
 }
 
 const data = () => {

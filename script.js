@@ -112,9 +112,8 @@ const render = () => {
 
     buttonDelete.onclick = async () => {
       const resp = await fetch(`http://localhost:8000/deleteExpenses?_id=${allExpenses[index]._id}`, {
-      method: 'DELETE'
+        method: 'DELETE'
       });
-
       const result = await resp.json();
       allExpenses = result.data;
 

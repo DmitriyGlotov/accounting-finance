@@ -1,4 +1,4 @@
-let allTask = [];
+let allExpenses = [];
 let valueNameShop = '';
 let valueCost = '';
 let nameShop = null;
@@ -11,16 +11,22 @@ buttonAdd.textContent = 'Добавить';
 const mainElemets = document.querySelector('.main-elements');
 mainElemets.appendChild(buttonAdd);
 
-window.onload = init = () =>  {
+window.onload = init = async () =>  {
   nameShop = document.querySelector('.shop');
   nameShop.addEventListener('change', updateNameShop);
   cost = document.querySelector('.cost');
   cost.addEventListener('change', updateCost);
 
+  const resp = await fetch('http://localhost:8000/allExpenses', {
+    method: 'GET'
+  });
+  const result = await resp.json();
+  allExpenses = result.data;
+
   render();
 }
 
-buttonAdd.onclick = () => {
+buttonAdd.onclick = async () => {
   valueNameShop = valueNameShop.trim();
 
   if (!valueNameShop || !valueCost) {
@@ -28,9 +34,23 @@ buttonAdd.onclick = () => {
     return (alert ('ERROR'));
   }
 
-  allTask.push({
+  allExpenses.push({
     textNameShop: valueNameShop,
     textCost: valueCost,
+    Data: data(),
+  });
+
+  const resp = await fetch('http://localhost:8000/createExpenses', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Access-Control-Allow-Origin': '*'
+    },
+    body: JSON.stringify({
+      textNameShop: valueNameShop,
+      textCost: valueCost,
+      Data: data(),
+    })
   });
 
   valueNameShop = '';
@@ -56,7 +76,7 @@ const render = () => {
     content.removeChild(content.firstChild);
   }
 
-  allTask.forEach((item, index) => {
+  allExpenses.forEach((item, index) => {
     const container = document.createElement('div');
     container.id = `task-${index}`;
     container.className = 'task';
@@ -66,8 +86,13 @@ const render = () => {
 
     const textNameShop = document.createElement('p');
     textNameShop.className = 'text-name-shop'
-    textNameShop.innerText = `${index + 1}) ${item.textNameShop} ${data()}`;
+    textNameShop.innerText = `${index + 1}) ${item.textNameShop}`;
     container.appendChild(textNameShop);
+
+    const date = document.createElement('p');
+    date.className = 'date';
+    date.innerText = `${data()}`;
+    container.appendChild(date);
 
     const numberCost = document.createElement('p');
     numberCost.className = 'text-cost';
@@ -84,6 +109,16 @@ const render = () => {
     buttonDelete.type = 'image';
     buttonDelete.src = 'images/delete.png';
     buttonDelete.className = 'button';
+
+    buttonDelete.onclick = async () => {
+      const resp = await fetch(`http://localhost:8000/deleteExpenses?_id=${allExpenses[index]._id}`, {
+        method: 'DELETE'
+      });
+      const result = await resp.json();
+      allExpenses = result.data;
+
+      render();
+    }
     containBut.appendChild(buttonDelete);
 
     countCost += Number(item.textCost);

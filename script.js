@@ -52,6 +52,8 @@ buttonAdd.onclick = async () => {
       Data: data(),
     })
   });
+  const result = await resp.json();
+  allExpenses = result.data;
 
   valueNameShop = '';
   nameShop.value = '';
@@ -84,42 +86,11 @@ const render = () => {
     const containBut = document.createElement('div');
     containBut.className = 'container-button';
 
-    const textNameShop = document.createElement('p');
-    textNameShop.className = 'text-name-shop'
-    textNameShop.innerText = `${index + 1}) ${item.textNameShop}`;
-    container.appendChild(textNameShop);
+    createElement(container, index, item);
 
-    const date = document.createElement('p');
-    date.className = 'date';
-    date.innerText = `${data()}`;
-    container.appendChild(date);
+    createButtEdit(containBut);
 
-    const numberCost = document.createElement('p');
-    numberCost.className = 'text-cost';
-    numberCost.innerText = `${item.textCost} р.`;
-    container.appendChild(numberCost);
-
-    const buttonEdit = document.createElement('input');
-    buttonEdit.type = 'image';
-    buttonEdit.src = 'images/edit.png'
-    buttonEdit.className = 'button';
-    containBut.appendChild(buttonEdit);
-
-    const buttonDelete = document.createElement('input');
-    buttonDelete.type = 'image';
-    buttonDelete.src = 'images/delete.png';
-    buttonDelete.className = 'button';
-
-    buttonDelete.onclick = async () => {
-      const resp = await fetch(`http://localhost:8000/deleteExpenses?_id=${allExpenses[index]._id}`, {
-        method: 'DELETE'
-      });
-      const result = await resp.json();
-      allExpenses = result.data;
-
-      render();
-    }
-    containBut.appendChild(buttonDelete);
+    createButtDelete(containBut, index);
 
     countCost += Number(item.textCost);
 
@@ -128,6 +99,51 @@ const render = () => {
   });
 
   expenses.innerText = `${countCost} р.`;
+}
+
+
+const createElement = (container, index, item) => {
+  const textNameShop = document.createElement('p');
+  textNameShop.className = 'text-name-shop'
+  textNameShop.innerText = `${index + 1}) ${item.textNameShop}`;
+  container.appendChild(textNameShop);
+
+  const date = document.createElement('p');
+  date.className = 'date';
+  date.innerText = `${data()}`;
+  container.appendChild(date);
+
+  const numberCost = document.createElement('p');
+  numberCost.className = 'text-cost';
+  numberCost.innerText = `${item.textCost} р.`;
+  container.appendChild(numberCost);
+}
+
+const createButtEdit = (containBut) => {
+  const buttonEdit = document.createElement('input');
+  buttonEdit.type = 'image';
+  buttonEdit.src = 'images/edit.png'
+  buttonEdit.className = 'button';
+
+  containBut.appendChild(buttonEdit);
+}
+
+const createButtDelete = (containBut, index) => {
+  const buttonDelete = document.createElement('input');
+  buttonDelete.type = 'image';
+  buttonDelete.src = 'images/delete.png';
+  buttonDelete.className = 'button';
+
+  buttonDelete.onclick = async () => {
+    const resp = await fetch(`http://localhost:8000/deleteExpenses?_id=${allExpenses[index]._id}`, {
+      method: 'DELETE'
+    });
+    const result = await resp.json();
+    allExpenses = result.data;
+
+    render();
+  }
+  containBut.appendChild(buttonDelete);
 }
 
 const data = () => {

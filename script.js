@@ -152,19 +152,19 @@ const createElement = (container, index, item) => {
       inputName.value = inputName.value.trim();
 
       if (inputName.value) {
-      allExpenses[index].textNameShop = inputName.value;
-      const { _id, textNameShop } = allExpenses[index];
+        allExpenses[index].textNameShop = inputName.value;
+        const { _id, textNameShop } = allExpenses[index];
 
-      const resp = await fetch('http://localhost:8000/changeExpensesInfo', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8',
-          'Access-Control-Allow-Origin': '*'
-        },
-        body: JSON.stringify({ _id, textNameShop })
-      });
-      const result = await resp.json();
-      allExpenses = result.data;
+        const resp = await fetch('http://localhost:8000/changeExpensesInfo', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+            'Access-Control-Allow-Origin': '*'
+          },
+          body: JSON.stringify({ _id, textNameShop })
+        });
+        const result = await resp.json();
+        allExpenses = result.data;
       }
 
       render();
@@ -194,19 +194,19 @@ const createElement = (container, index, item) => {
       flagData = null;
 
       if (inputData.value) {
-      allExpenses[index].Data = inputData.value;
-      const { _id, Data } = allExpenses[index];
+        allExpenses[index].Data = inputData.value;
+        const { _id, Data } = allExpenses[index];
 
-      const resp = await fetch('http://localhost:8000/changeExpensesInfo', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8',
-          'Access-Control-Allow-Origin': '*'
-        },
-        body: JSON.stringify({ _id, Data })
-      });
-      const result = await resp.json();
-      allExpenses = result.data;
+        const resp = await fetch('http://localhost:8000/changeExpensesInfo', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+            'Access-Control-Allow-Origin': '*'
+          },
+          body: JSON.stringify({ _id, Data })
+        });
+        const result = await resp.json();
+        allExpenses = result.data;
       }
 
       render();
@@ -217,7 +217,7 @@ const createElement = (container, index, item) => {
     numberCost.className = 'text-cost';
     numberCost.innerText = `${item.textCost} р.`;
     container.appendChild(numberCost);
-    
+
     numberCost.ondblclick = () => {
       flagCost = index;
 
@@ -236,19 +236,19 @@ const createElement = (container, index, item) => {
       flagCost = null;
 
       if (inputCost.value) {
-      allExpenses[index].textCost = inputCost.value;
-      const { _id, textCost } = allExpenses[index];
+        allExpenses[index].textCost = inputCost.value;
+        const { _id, textCost } = allExpenses[index];
 
-      const resp = await fetch('http://localhost:8000/changeExpensesInfo', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8',
-          'Access-Control-Allow-Origin': '*'
-        },
-        body: JSON.stringify({ _id, textCost })
-      });
-      const result = await resp.json();
-      allExpenses = result.data;
+        const resp = await fetch('http://localhost:8000/changeExpensesInfo', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8',
+            'Access-Control-Allow-Origin': '*'
+          },
+          body: JSON.stringify({ _id, textCost })
+        });
+        const result = await resp.json();
+        allExpenses = result.data;
       }
 
       render();

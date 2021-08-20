@@ -3,6 +3,7 @@ let valueNameShop = '';
 let valueCost = '';
 let nameShop = null;
 let cost = 0;
+let date = '';
 
 const buttonAdd = document.createElement('button');
 buttonAdd.className = 'button-add';
@@ -37,7 +38,9 @@ buttonAdd.onclick = async () => {
   allExpenses.push({
     textNameShop: valueNameShop,
     textCost: valueCost,
-    Data: data(),
+    Data: date,
+    checkButtEdit: false,
+    dateFlag: false,
   });
 
   const resp = await fetch('http://localhost:8000/createExpenses', {
@@ -83,18 +86,48 @@ const render = () => {
     container.id = `task-${index}`;
     container.className = 'task';
 
-    const containBut = document.createElement('div');
-    containBut.className = 'container-button';
+    if (!allExpenses[index].checkButtEdit) {
+      const containBut = document.createElement('div');
+      containBut.className = 'container-button';
 
-    createElement(container, index, item);
+      createElement(container, index, item);
 
-    createButtEdit(containBut);
+      createButtEdit(containBut, index);
 
-    createButtDelete(containBut, index);
+      createButtDelete(containBut, index);
+
+      container.appendChild(containBut);
+    } else {
+      const containBut = document.createElement('div');
+      containBut.className = "container-button";
+
+      const inputName = document.createElement('input');
+      inputName.className = "input-fixed";
+      inputName.value = allExpenses[index].textNameShop;
+      container.appendChild(inputName);
+
+      const inputData = document.createElement('input');
+      inputData.type = 'date';
+      inputData.format = 'yyyy-mm-dd';
+      inputData.className = "input-fixed";
+      inputData.value = allExpenses[index].Data;
+      container.appendChild(inputData);
+
+      const inputCost = document.createElement('input');
+      inputCost.className = "input-fixed";
+      inputCost.type = Number;
+      inputCost.value = allExpenses[index].textCost;
+      container.appendChild(inputCost);
+
+      createButtonDone(containBut, inputName, inputData, inputCost, index);
+
+      createButtonCancel(containBut, index);
+
+      container.appendChild(containBut);
+    }
 
     countCost += Number(item.textCost);
 
-    container.appendChild(containBut);
     content.appendChild(container);
   });
 
@@ -110,7 +143,7 @@ const createElement = (container, index, item) => {
 
   const date = document.createElement('p');
   date.className = 'date';
-  date.innerText = `${data()}`;
+  date.innerText = allExpenses[index].Data;
   container.appendChild(date);
 
   const numberCost = document.createElement('p');
@@ -119,11 +152,17 @@ const createElement = (container, index, item) => {
   container.appendChild(numberCost);
 }
 
-const createButtEdit = (containBut) => {
+const createButtEdit = (containBut, index) => {
   const buttonEdit = document.createElement('input');
   buttonEdit.type = 'image';
   buttonEdit.src = 'images/edit.png'
   buttonEdit.className = 'button';
+
+  buttonEdit.onclick = () => {
+    allExpenses[index].checkButtEdit = true;
+
+    render();
+  }
 
   containBut.appendChild(buttonEdit);
 }
@@ -146,6 +185,57 @@ const createButtDelete = (containBut, index) => {
   containBut.appendChild(buttonDelete);
 }
 
+const createButtonDone = (containBut, inputName, inputData, inputCost, index) => {
+  const butDone = document.createElement('input');
+  butDone.className = 'button';
+  butDone.type = 'image';
+  butDone.src = 'images/done.png';
+
+  butDone.onclick = async () => {
+    checkButt = false;
+    inputName.value = inputName.value.trim();
+    inputData.value = inputData.value.trim();
+    inputCost.value = inputCost.value.trim();
+
+    if (inputName.value && inputData.value && inputCost.value) {
+      allExpenses[index].textNameShop = inputName.value;
+      allExpenses[index].textCost = inputCost.value;
+      allExpenses[index].Data = inputData.value;
+      const { _id, textNameShop, textCost, Data } = allExpenses[index];
+
+      const resp = await fetch('http://localhost:8000/changeExpensesInfo', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify({ _id, textNameShop, textCost, Data })
+      });
+      const result = await resp.json();
+      allExpenses = result.data;
+    }
+
+    render();
+  }
+
+  containBut.appendChild(butDone);
+}
+
+const createButtonCancel = (containBut, index) => {
+  const butCanc = document.createElement('input');
+  butCanc.className = 'button';
+  butCanc.type = 'image';
+  butCanc.src = 'images/cancel.png';
+
+  butCanc.onclick = () => {
+    allExpenses[index].checkButtEdit = false;
+
+    render();
+  }
+
+  containBut.appendChild(butCanc);
+}
+
 const data = () => {
   let day = new Date().getDate();
   let month = new Date().getMonth() + 1;
@@ -159,5 +249,5 @@ const data = () => {
     month = `0${month}`;
   }
 
-  return `${day}-${month}-${year}`;
+  return `${year}-${month}-${day}`;
 }

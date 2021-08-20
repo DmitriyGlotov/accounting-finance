@@ -3,7 +3,10 @@ let valueNameShop = '';
 let valueCost = '';
 let nameShop = null;
 let cost = 0;
-let date = '';
+let checkButtEdit = null;
+let flagName = null;
+let flagData = null;
+let flagCost = null;
 
 const buttonAdd = document.createElement('button');
 buttonAdd.className = 'button-add';
@@ -34,14 +37,6 @@ buttonAdd.onclick = async () => {
     nameShop.value = '';
     return (alert ('ERROR'));
   }
-
-  allExpenses.push({
-    textNameShop: valueNameShop,
-    textCost: valueCost,
-    Data: date,
-    checkButtEdit: false,
-    dateFlag: false,
-  });
 
   const resp = await fetch('http://localhost:8000/createExpenses', {
     method: 'POST',
@@ -86,7 +81,7 @@ const render = () => {
     container.id = `task-${index}`;
     container.className = 'task';
 
-    if (!allExpenses[index].checkButtEdit) {
+    if (checkButtEdit !== index) {
       const containBut = document.createElement('div');
       containBut.className = 'container-button';
 
@@ -108,7 +103,6 @@ const render = () => {
 
       const inputData = document.createElement('input');
       inputData.type = 'date';
-      inputData.format = 'yyyy-mm-dd';
       inputData.className = "input-fixed";
       inputData.value = allExpenses[index].Data;
       container.appendChild(inputData);
@@ -136,20 +130,130 @@ const render = () => {
 
 
 const createElement = (container, index, item) => {
-  const textNameShop = document.createElement('p');
-  textNameShop.className = 'text-name-shop'
-  textNameShop.innerText = `${index + 1}) ${item.textNameShop}`;
-  container.appendChild(textNameShop);
+  if (flagName !== index) {
+    const textNameShop = document.createElement('p');
+    textNameShop.className = 'text-name-shop'
+    textNameShop.innerText = `${index + 1}) ${item.textNameShop}`;
+    container.appendChild(textNameShop);
 
-  const date = document.createElement('p');
-  date.className = 'date';
-  date.innerText = allExpenses[index].Data;
-  container.appendChild(date);
+    textNameShop.ondblclick = () => {
+      flagName = index;
 
-  const numberCost = document.createElement('p');
-  numberCost.className = 'text-cost';
-  numberCost.innerText = `${item.textCost} р.`;
-  container.appendChild(numberCost);
+      render();
+    }
+  } else {
+    const inputName = document.createElement('input');
+    inputName.className = "input-fixed";
+    inputName.value = allExpenses[index].textNameShop;
+    inputName.focus();
+    container.appendChild(inputName);
+    inputName.addEventListener('blur', async (event) => {
+      flagName = null;
+      inputName.value = inputName.value.trim();
+
+      if (inputName.value) {
+      allExpenses[index].textNameShop = inputName.value;
+      const { _id, textNameShop } = allExpenses[index];
+
+      const resp = await fetch('http://localhost:8000/changeExpensesInfo', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify({ _id, textNameShop })
+      });
+      const result = await resp.json();
+      allExpenses = result.data;
+      }
+
+      render();
+    });
+  }
+
+  if (flagData !== index) {
+    const date = document.createElement('p');
+    date.className = 'date';
+    date.innerText = allExpenses[index].Data;
+    container.appendChild(date);
+
+    date.ondblclick = () => {
+      flagData = index;
+
+      render();
+    }
+  } else {
+    const inputData = document.createElement('input');
+    inputData.type = 'date';
+    inputData.className = "input-fixed";
+    inputData.value = allExpenses[index].Data;
+    inputData.focus();
+    container.appendChild(inputData);
+
+    inputData.addEventListener('blur', async (event) => {
+      flagData = null;
+
+      if (inputData.value) {
+      allExpenses[index].Data = inputData.value;
+      const { _id, Data } = allExpenses[index];
+
+      const resp = await fetch('http://localhost:8000/changeExpensesInfo', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify({ _id, Data })
+      });
+      const result = await resp.json();
+      allExpenses = result.data;
+      }
+
+      render();
+    });
+  }
+  if (flagCost !== index) {
+    const numberCost = document.createElement('p');
+    numberCost.className = 'text-cost';
+    numberCost.innerText = `${item.textCost} р.`;
+    container.appendChild(numberCost);
+    
+    numberCost.ondblclick = () => {
+      flagCost = index;
+
+      render();
+    }
+  } else{
+    const inputCost = document.createElement('input');
+    inputCost.className = "input-fixed";
+    inputCost.type = Number;
+    inputCost.value = allExpenses[index].textCost;
+    inputCost.focus();
+    container.appendChild(inputCost);
+
+    inputCost.addEventListener('blur', async (event) => {
+      inputCost.value = inputCost.value.trim();
+      flagCost = null;
+
+      if (inputCost.value) {
+      allExpenses[index].textCost = inputCost.value;
+      const { _id, textCost } = allExpenses[index];
+
+      const resp = await fetch('http://localhost:8000/changeExpensesInfo', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify({ _id, textCost })
+      });
+      const result = await resp.json();
+      allExpenses = result.data;
+      }
+
+      render();
+    });
+  }
 }
 
 const createButtEdit = (containBut, index) => {
@@ -159,7 +263,7 @@ const createButtEdit = (containBut, index) => {
   buttonEdit.className = 'button';
 
   buttonEdit.onclick = () => {
-    allExpenses[index].checkButtEdit = true;
+    checkButtEdit = index;
 
     render();
   }
@@ -192,9 +296,8 @@ const createButtonDone = (containBut, inputName, inputData, inputCost, index) =>
   butDone.src = 'images/done.png';
 
   butDone.onclick = async () => {
-    checkButt = false;
+    checkButtEdit = false;
     inputName.value = inputName.value.trim();
-    inputData.value = inputData.value.trim();
     inputCost.value = inputCost.value.trim();
 
     if (inputName.value && inputData.value && inputCost.value) {
@@ -228,7 +331,7 @@ const createButtonCancel = (containBut, index) => {
   butCanc.src = 'images/cancel.png';
 
   butCanc.onclick = () => {
-    allExpenses[index].checkButtEdit = false;
+    checkButtEdit = null;
 
     render();
   }

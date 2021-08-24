@@ -97,18 +97,18 @@ const render = () => {
       containBut.className = "container-button";
 
       const inputName = document.createElement('input');
-      inputName.className = "input-fixed";
+      inputName.className = "input-fixed-text";
       inputName.value = allExpenses[index].textNameShop;
       container.appendChild(inputName);
 
       const inputData = document.createElement('input');
       inputData.type = 'date';
-      inputData.className = "input-fixed";
+      inputData.className = "input-fixed-date";
       inputData.value = allExpenses[index].Data;
       container.appendChild(inputData);
 
       const inputCost = document.createElement('input');
-      inputCost.className = "input-fixed";
+      inputCost.className = "input-fixed-cost";
       inputCost.type = Number;
       inputCost.value = allExpenses[index].textCost;
       container.appendChild(inputCost);
@@ -143,7 +143,7 @@ const createElement = (container, index, item) => {
     }
   } else {
     const inputName = document.createElement('input');
-    inputName.className = "input-fixed";
+    inputName.className = "input-fixed-text";
     inputName.value = allExpenses[index].textNameShop;
     inputName.focus();
     container.appendChild(inputName);
@@ -185,7 +185,7 @@ const createElement = (container, index, item) => {
   } else {
     const inputData = document.createElement('input');
     inputData.type = 'date';
-    inputData.className = "input-fixed";
+    inputData.className = "input-fixed-date";
     inputData.value = allExpenses[index].Data;
     inputData.focus();
     container.appendChild(inputData);
@@ -225,7 +225,7 @@ const createElement = (container, index, item) => {
     }
   } else{
     const inputCost = document.createElement('input');
-    inputCost.className = "input-fixed";
+    inputCost.className = "input-fixed-cost";
     inputCost.type = Number;
     inputCost.value = allExpenses[index].textCost;
     inputCost.focus();

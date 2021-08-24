@@ -1,106 +1,325 @@
 body {
   background-color: bisque;
+  display: flex;
+  justify-content: center;
 }
 
 .main {
+  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+h1 {
+  margin: 4%;
 }
 
 .main-elements {
+  width: 90%;
   display: flex;
-  align-items: center;
   justify-content: space-around;
-  width: 60%;
+  align-items: center;
 }
 
 .name-shop {
-  width: 35%;
+  width: 40%;
+  height: 100px;
+  font-size: 20px;
+}
+
+.name-shop p {
+  margin: 0;
+  margin-bottom: 20px;
 }
 
 .shop {
-  width: 96%;
+  width: 90%;
+  font-size: 15px;
   height: 25px;
-  border-radius: 10px;
-  border-color: black;
-  font-size: 18px;
 }
 
 .expenses {
-  width: 24%;
+  width: 40%;
+  height: 100px;
+  font-size: 20px;
+}
+
+.expenses p {
+  margin: 0;
+  margin-bottom: 20px;
 }
 
 .cost {
-  width: 96%;
+  width: 90%;
+  font-size: 15px;
   height: 25px;
-  border-radius: 10px;
-  border-color: black;
-  font-size: 18px;
 }
 
 .button-add {
-  width: 15%;
+  width: 10%;
   height: 30px;
-  margin-top: 50px;
+  background-color: burlywood;
   border-radius: 6px;
   border-color: burlywood;
-  background-color: burlywood;
-}
-
-.button-add:hover {
-  cursor: pointer;
-}
-
-.content-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 55%;
 }
 
 .total-cost {
+  width: 81%;
   display: flex;
   justify-content: flex-end;
-  width: 55%;
-  padding: 20px;
-  font-size: 19px;
+  font-size: 20px;
 }
 
-.total-cost p {
-  margin: 0px;
-  margin-right: 5px;
+.content-page {
+  width: 87%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 20px;
+  overflow: auto;
+  height: 600px;
+}
+
+::-webkit-scrollbar {
+  opacity: 0;
 }
 
 .task {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .text-name-shop {
-  width: 50%;
-  font-size: 19px;
+  width: 40%;
+}
+
+.date {
+  width: 20%;
 }
 
 .text-cost {
+  width: 16%;
   text-align: end;
-  width: 10%;
-  font-size: 17px;
 }
 
 .container-button {
+  width: 15%;
+  margin-left: 20px;
   display: flex;
   justify-content: space-between;
-  width: 15%;
 }
 
 .button {
-  width: 35px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
 }
 
-input {
-  outline: none;
+.input-fixed-text {
+  width: 39%;
+  font-size: 20px;
+}
+
+.input-fixed-date {
+  width: 19%;
+  font-size: 20px;
+}
+
+.input-fixed-cost {
+  width: 14%;
+  font-size: 20px;
+}
+
+@media screen and (max-width:1050px) {
+  .main {
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 45px;
+  }
+
+  .name-shop {
+    font-size: 30px;
+  }
+
+  .expenses {
+    font-size: 30px;
+  }
+
+  .shop {
+    font-size: 30px;
+    height: 35px;
+  }
+
+  .cost {
+    font-size: 30px;
+    height: 35px;
+  }
+
+  .button-add {
+    font-size: 25px;
+    width: 140px;
+    height: 45px;
+  }
+
+  .total-cost {
+    font-size: 30px;
+  }
+
+  .content-page {
+    font-size: 30px;
+    height: 900px;
+  }
+
+  .date {
+    width: 16%;
+  }
+}
+
+@media screen and (max-width:770px) {
+  .name-shop {
+    font-size: 25px;
+  }
+
+  .shop {
+    font-size: 25px;
+    height: 29px;
+  }
+
+  .expenses {
+    font-size: 24px;
+  }
+  .cost {
+    font-size: 24px;
+    height: 28px;
+  }
+
+  .button-add {
+    font-size: 20px;
+    width: 110px;
+    height: 35px;
+  }
+
+  .total-cost {
+    font-size: 25px;
+  }
+
+  .content-page {
+    font-size: 25px;
+    height: 423px;
+  }
+
+  .date {
+    width: 18%;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  .main-elements {
+    flex-direction: column;
+  }
+
+  .name-shop {
+    height: 124px;
+    width: 90%;
+  }
+
+  .expenses {
+    height: 124px;
+    width: 90%;
+  }
+
+  .input-fixed {
+    height: 19px;
+    width: 25%;
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width:440px) {
+  .name-shop {
+    font-size: 20px;
+    height: 100px
+  }
+
+  .expenses {
+    font-size: 20px;
+    height: 100px
+  }
+
+  .shop {
+    font-size: 20px;
+    height: 20px;
+  }
+
+  .cost {
+    font-size: 20px;
+    height: 20px;
+  }
+
+  .button-add {
+    font-size: 15px;
+    width: 95px;
+    height: 29px;
+  }
+
+  .input-fixed-text {
+    width: 26%;
+    height: 16px;
+    font-size: 16px;
+  }
+
+  .input-fixed-date {
+    width: 17%;
+    height: 18px;
+    font-size: 13px;
+  }
+
+  .input-fixed-cost {
+    width: 15%;
+    height: 15px;
+    font-size: 16px;
+  }
+
+  h1 {
+    font-size: 25px;
+  }
+
+  .content-page {
+    width: 95%;
+    font-size: 16px;
+    height: 415px;
+  }
+
+  .total-cost {
+    font-size: 18px;
+  }
+
+  .text-cost {
+    width: 25%;
+  }
+
+  .text-name-shop {
+    width: 35%;
+  }
+
+  .date {
+    width: 24%;
+  }
+
+  .container-button {
+    margin-left: 10px;
+  }
+
+  .button {
+    width: 25px;
+    height: 25px;
+  }
 }
